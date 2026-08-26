@@ -6,16 +6,16 @@ import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./icons";
 
 const systemLinks = [
-  { label: "System overview", detail: "The complete response chain", href: "/system", number: "00" },
-  { label: "Door Alarm", detail: "Forced-entry detection", href: "/system/door-alarm", number: "01" },
-  { label: "Indoor Camera", detail: "Real-time verification", href: "/system/indoor-camera", number: "02" },
-  { label: "Visibility Reducer", detail: "Human-controlled response", href: "/system/visibility-reducer", number: "03" },
+  { label: "System overview", detail: "The complete response chain", href: "/system", number: "I" },
+  { label: "Door Alarm", detail: "Forced-entry detection", href: "/system/door-alarm", number: "II" },
+  { label: "Indoor Camera", detail: "Real-time verification", href: "/system/indoor-camera", number: "III" },
+  { label: "Visibility Reducer", detail: "Human-controlled response", href: "/system/visibility-reducer", number: "IV" },
 ] as const;
 
 const companyLinks = [
-  { label: "About TNOTL", detail: "Purpose and principles", href: "/about", number: "01" },
-  { label: "Use Cases", detail: "Homes, schools and property", href: "/use-cases", number: "02" },
-  { label: "Contact", detail: "Plan your protection", href: "/contact", number: "03" },
+  { label: "About TNOTL", detail: "Purpose and principles", href: "/about", number: "I" },
+  { label: "Use Cases", detail: "Homes, schools and property", href: "/use-cases", number: "II" },
+  { label: "Contact", detail: "Plan your protection", href: "/contact", number: "III" },
 ] as const;
 
 function Mark({ ghost = false }: { ghost?: boolean }) {
@@ -41,7 +41,7 @@ export function SiteHeader() {
     <header className={`header-system${condensed ? " is-condensed" : ""}`}>
       <div className="brand-masthead">
         <Link href="/" aria-label="TNOTL home"><Mark /></Link>
-        <span className="masthead-code">HUMAN LIFE PROTECTION / TN–001</span>
+        <span className="masthead-code">HUMAN LIFE PROTECTION / TN–I</span>
       </div>
 
       <div className="nav-panel">
@@ -78,7 +78,7 @@ export function SiteHeader() {
         <details className="mobile-menu" ref={mobileMenu}>
           <summary aria-label="Open navigation"><span /><span /></summary>
           <nav aria-label="Mobile navigation">
-            <Link href="/" onClick={closeMobile}><small>00</small>Home</Link>
+            <Link href="/" onClick={closeMobile}><small>I</small>Home</Link>
             <p>System</p>
             {systemLinks.map((item) => <Link href={item.href} key={item.href} onClick={closeMobile}><small>{item.number}</small>{item.label}</Link>)}
             <p>Company</p>

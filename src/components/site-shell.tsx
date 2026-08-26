@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Arrow } from "./icons";
+import { FooterSignal } from "./footer-signal";
 
 export function Footer() {
   return (
     <footer className="footer">
       <div className="footer-top">
+        <FooterSignal />
         <p className="eyebrow">A human-controlled security system</p>
         <h2>Protect what<br /><em>matters.</em></h2>
         <Link className="round-link" href="/contact" aria-label="Contact TNOTL">
@@ -12,20 +14,23 @@ export function Footer() {
         </Link>
       </div>
       <div className="footer-grid">
-        <Link className="wordmark footer-wordmark" href="/">TNOTL<span className="wordmark-dot" /></Link>
-        <div>
+        <div className="footer-brand-block">
+          <Link className="wordmark footer-wordmark" href="/">TNOTL<span className="wordmark-dot" /></Link>
+          <p><i />Protection ready.<br />Human control, always.</p>
+        </div>
+        <div className="footer-nav-group">
           <p className="footer-label">System</p>
           <Link href="/system/door-alarm">Door Alarm</Link>
           <Link href="/system/indoor-camera">Indoor Camera</Link>
           <Link href="/system/visibility-reducer">Visibility Reducer</Link>
         </div>
-        <div>
+        <div className="footer-nav-group">
           <p className="footer-label">Company</p>
           <Link href="/about">About</Link>
           <Link href="/use-cases">Use Cases</Link>
           <Link href="/contact">Contact</Link>
         </div>
-        <p className="footer-signoff">Alarm. Verify. Deploy.</p>
+        <p className="footer-signoff"><span>System logic</span>Alarm.<br />Verify.<br />Deploy.</p>
       </div>
       <div className="footer-legal">
         <span>© {new Date().getFullYear()} TNOTL</span>
