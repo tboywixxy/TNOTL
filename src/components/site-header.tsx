@@ -25,7 +25,12 @@ function Mark({ ghost = false }: { ghost?: boolean }) {
 export function SiteHeader() {
   const pathname = usePathname();
   const [condensed, setCondensed] = useState(false);
-  const mobileMenu = useRef<HTMLDetailsElement>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [systemOpen, setSystemOpen] = useState(() => pathname.startsWith("/system"));
+  const [companyOpen, setCompanyOpen] = useState(() => ["/about", "/contact", "/use-cases"].includes(pathname));
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const mobileDrawer = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setCondensed(window.scrollY > 68);
@@ -34,7 +39,54 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const closeMobile = () => mobileMenu.current?.removeAttribute("open");
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1101px)");
+    const closeAtDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMobileOpen(false);
+    };
+
+    desktop.addEventListener("change", closeAtDesktop);
+    return () => desktop.removeEventListener("change", closeAtDesktop);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButton.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        menuButton.current?.focus();
+      }
+
+      if (event.key === "Tab") {
+        const focusable = Array.from(
+          mobileDrawer.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
+        ).filter((element) => element.offsetParent !== null);
+        const first = focusable[0];
+        const last = focusable.at(-1);
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
+
+  const closeMobile = () => setMobileOpen(false);
   const isCurrent = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
@@ -75,17 +127,90 @@ export function SiteHeader() {
           </div>
         </nav>
 
-        <details className="mobile-menu" ref={mobileMenu}>
-          <summary aria-label="Open navigation"><span /><span /></summary>
+        <button
+          ref={menuButton}
+          className={`mobile-menu-toggle${mobileOpen ? " is-open" : ""}`}
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="mobile-navigation"
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(true)}
+        >
+          <span /><span />
+        </button>
+
+        <button
+          className={`mobile-menu-backdrop${mobileOpen ? " is-open" : ""}`}
+          type="button"
+          aria-label="Close navigation"
+          tabIndex={mobileOpen ? 0 : -1}
+          onClick={closeMobile}
+        />
+
+        <aside
+          ref={mobileDrawer}
+          className={`mobile-drawer${mobileOpen ? " is-open" : ""}`}
+          id="mobile-navigation"
+          aria-hidden={!mobileOpen}
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className="mobile-drawer-head">
+            <Mark />
+            <button ref={closeButton} type="button" aria-label="Close navigation" onClick={closeMobile}>
+              <span /><span />
+            </button>
+          </div>
+
           <nav aria-label="Mobile navigation">
-            <Link href="/" onClick={closeMobile}><small>I</small>Home</Link>
-            <p>System</p>
-            {systemLinks.map((item) => <Link href={item.href} key={item.href} onClick={closeMobile}><small>{item.number}</small>{item.label}</Link>)}
-            <p>Company</p>
-            {companyLinks.map((item) => <Link href={item.href} key={item.href} onClick={closeMobile}><small>{item.number}</small>{item.label}</Link>)}
-            <Link className="button button-solid" href="/contact" onClick={closeMobile}>Get protected <Arrow /></Link>
+            <Link className="mobile-primary-link" href="/" onClick={closeMobile} aria-current={pathname === "/" ? "page" : undefined}>
+              <small>01</small><span>Home</span><Arrow />
+            </Link>
+
+            <div className={`mobile-nav-group${systemOpen ? " is-open" : ""}`}>
+              <div className="mobile-nav-heading">
+                <Link href="/system" onClick={closeMobile} aria-current={pathname === "/system" ? "page" : undefined}><small>02</small><span>System</span></Link>
+                <button type="button" aria-label="Toggle System links" aria-expanded={systemOpen} onClick={() => setSystemOpen((open) => !open)}><i /></button>
+              </div>
+              <div className="mobile-submenu" inert={!systemOpen ? true : undefined}>
+                <div>
+                  {systemLinks.map((item) => (
+                    <Link href={item.href} key={item.href} onClick={closeMobile} aria-current={pathname === item.href ? "page" : undefined}>
+                      <small>{item.number}</small><span><strong>{item.label}</strong><em>{item.detail}</em></span><Arrow />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <Link className="mobile-primary-link" href="/#sequence" onClick={closeMobile}>
+              <small>03</small><span>How it works</span><Arrow />
+            </Link>
+            <Link className="mobile-primary-link" href="/use-cases" onClick={closeMobile} aria-current={pathname === "/use-cases" ? "page" : undefined}>
+              <small>04</small><span>Use cases</span><Arrow />
+            </Link>
+
+            <div className={`mobile-nav-group${companyOpen ? " is-open" : ""}`}>
+              <div className="mobile-nav-heading">
+                <Link href="/about" onClick={closeMobile} aria-current={pathname === "/about" ? "page" : undefined}><small>05</small><span>Company</span></Link>
+                <button type="button" aria-label="Toggle Company links" aria-expanded={companyOpen} onClick={() => setCompanyOpen((open) => !open)}><i /></button>
+              </div>
+              <div className="mobile-submenu" inert={!companyOpen ? true : undefined}>
+                <div>
+                  {companyLinks.map((item) => (
+                    <Link href={item.href} key={item.href} onClick={closeMobile} aria-current={pathname === item.href ? "page" : undefined}>
+                      <small>{item.number}</small><span><strong>{item.label}</strong><em>{item.detail}</em></span><Arrow />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </nav>
-        </details>
+
+          <div className="mobile-drawer-foot">
+            <Link className="button button-solid" href="/contact" onClick={closeMobile}>Get protected <Arrow /></Link>
+          </div>
+        </aside>
       </div>
     </header>
   );

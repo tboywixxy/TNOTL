@@ -28,7 +28,7 @@ const slides = [
   },
 ] as const;
 
-const slideDuration = 4000;
+const slideDuration = 10_000;
 
 export function HeroSlider() {
   const [activeSlide, setActiveSlide] = useState(0);
