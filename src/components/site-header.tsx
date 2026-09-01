@@ -205,11 +205,11 @@ export function SiteHeader() {
                 </div>
               </div>
             </div>
-          </nav>
 
-          <div className="mobile-drawer-foot">
-            <Link className="button button-solid" href="/contact" onClick={closeMobile}>Get protected <Arrow /></Link>
-          </div>
+            <div className="mobile-drawer-foot">
+              <Link className="button button-solid" href="/contact" onClick={closeMobile}>Get protected <Arrow /></Link>
+            </div>
+          </nav>
         </aside>
       </div>
     </header>
