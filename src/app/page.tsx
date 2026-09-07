@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/icons";
 import { Eyebrow, TextLink } from "@/components/site-shell";
-import { SystemDemo } from "@/components/system-demo";
-import { HeroSlider } from "@/components/hero-slider";
+import { EcosystemHero } from "@/components/ecosystem-hero";
+import { HomeEcosystemShowcase, HomeTgkShowcase } from "@/components/home-ecosystem-showcase";
 import { romanNumerals, sequence, useCases } from "@/data/site";
 
 export default function Home() {
   return (
     <main>
-      <HeroSlider />
+      <EcosystemHero />
 
       <section className="signal-strip" aria-label="System principles"><span>Alarm</span><i>I</i><span>Verify</span><i>II</i><span>Deploy</span><i>III</i><strong>Human-controlled</strong></section>
 
@@ -56,11 +56,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="demo-section">
-        <div className="demo-heading"><div><Eyebrow index="IV /">Interactive system demo</Eyebrow><h2>Information first.<br /><em>Action second.</em></h2></div><p>Step through a simulated intrusion and see exactly where human judgement enters the system.</p></div>
-        <SystemDemo />
-      </section>
-
       <section className="human-control">
         <div className="human-sketch">
           <Image src="/images/illustrations/human-remote-control-black.png" alt="Illustration of a Black person deliberately activating a security remote" width={1132} height={1390} sizes="(max-width: 760px) 80vw, 38vw" />
@@ -78,10 +73,14 @@ export default function Home() {
         </div>
       </section>
 
+      <HomeTgkShowcase />
+
       <section className="cases-preview">
         <div className="cases-heading"><Eyebrow index="VI /">Where protection matters</Eyebrow><h2>Designed around<br /><em>occupied space.</em></h2><TextLink href="/use-cases">Explore use cases</TextLink></div>
         <div className="cases-list">{useCases.slice(0, 3).map((item) => <Link href="/use-cases" className={`case-row ${item.className}`} key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.label}</p><Arrow /></Link>)}</div>
       </section>
+
+      <HomeEcosystemShowcase />
 
       <section className="final-cta"><p className="eyebrow">Ready when you are</p><h2>Protection should feel<br /><em>decisive.</em></h2><p>Tell us about the space you need to protect.</p><Link className="button button-light" href="/contact">Request a consultation <Arrow /></Link></section>
     </main>

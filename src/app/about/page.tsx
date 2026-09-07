@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ApertureMark } from "@/components/icons";
 import { Eyebrow } from "@/components/site-shell";
 
 export const metadata: Metadata = {
@@ -22,7 +21,6 @@ export default function AboutPage() {
           <h1>More awareness.<br /><em>Less uncertainty.</em></h1>
         </div>
         <p>Security should make a critical moment clearer—not make the final decision for you.</p>
-        <ApertureMark />
       </section>
 
       <section className="about-belief-photo">

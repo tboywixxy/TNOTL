@@ -36,3 +36,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 # TNOTL
+
+## Partner website links
+
+Set these values in `.env.local` (or your deployment environment) to the official HTTPS URLs:
+
+```dotenv
+NEXT_PUBLIC_VIGIL_360_URL=
+NEXT_PUBLIC_TGK_URL=
+```
+
+The shared configuration lives in `src/data/partners.ts`. Rebuild after changing these values. Until configured, partner CTAs are visibly unavailable and display “Website coming soon”. Configured links open in a new tab with `noopener noreferrer`. The homepage's TGK node links to `/philanthropy`, where the visitor can continue to the separate TGK website.

@@ -6,6 +6,14 @@ import "./globals.css";
 
 const inter = localFont({ src: "../../public/fonts/Inter-Variable.ttf", variable: "--font-sans", display: "swap" });
 const instrument = localFont({ src: "../../public/fonts/InstrumentSerif-Regular.ttf", variable: "--font-display", display: "swap" });
+const plexMono = localFont({
+  src: [
+    { path: "../../public/fonts/IBMPlexMono-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/IBMPlexMono-SemiBold.ttf", weight: "600", style: "normal" },
+  ],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tnotl.com"),
@@ -16,5 +24,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  return <html lang="en" className={`${inter.variable} ${instrument.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader /><div id="main-content">{children}</div><Footer /></body></html>;
+  return <html lang="en" className={`${inter.variable} ${instrument.variable} ${plexMono.variable}`}><body><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader /><div id="main-content">{children}</div><Footer /></body></html>;
 }

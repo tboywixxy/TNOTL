@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Arrow } from "./icons";
+import { BrandLogo } from "./brand-logo";
 
 const systemLinks = [
   { label: "System overview", detail: "The complete response chain", href: "/system", number: "I" },
@@ -18,8 +19,13 @@ const companyLinks = [
   { label: "Contact", detail: "Plan your protection", href: "/contact", number: "III" },
 ] as const;
 
+const partnerLinks = [
+  { label: "TGK", detail: "The Guardians' Keeper", href: "/philanthropy", number: "I" },
+  { label: "Vigil 360", detail: "Software partnership", href: "/vigil360", number: "II" },
+] as const;
+
 function Mark({ ghost = false }: { ghost?: boolean }) {
-  return <span className={ghost ? "nav-ghost-wordmark" : "masthead-wordmark"}>TNOTL<i /></span>;
+  return <span className={ghost ? "nav-ghost-wordmark" : "masthead-wordmark"}><BrandLogo /><span>TNOTL<i /></span></span>;
 }
 
 export function SiteHeader() {
@@ -27,7 +33,9 @@ export function SiteHeader() {
   const [condensed, setCondensed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [systemOpen, setSystemOpen] = useState(() => pathname.startsWith("/system"));
-  const [companyOpen, setCompanyOpen] = useState(() => ["/about", "/contact", "/use-cases"].includes(pathname));
+  const [companyOpen, setCompanyOpen] = useState(() => companyLinks.some((item) => item.href === pathname));
+  const [partnersOpen, setPartnersOpen] = useState(() => partnerLinks.some((item) => item.href === pathname));
+  const lightHero = ["/about", "/use-cases", "/contact"].includes(pathname);
   const menuButton = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const mobileDrawer = useRef<HTMLElement>(null);
@@ -90,14 +98,9 @@ export function SiteHeader() {
   const isCurrent = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className={`header-system${condensed ? " is-condensed" : ""}`}>
-      <div className="brand-masthead">
-        <Link href="/" aria-label="TNOTL home"><Mark /></Link>
-        <span className="masthead-code">HUMAN LIFE PROTECTION / TN–I</span>
-      </div>
-
+    <header className={`header-system${lightHero ? " has-light-hero" : ""}${condensed ? " is-condensed" : ""}`}>
       <div className="nav-panel">
-        <Mark ghost />
+        <Link className="nav-home" href="/" aria-label="TNOTL home"><Mark ghost /></Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
           <div className="nav-cluster nav-cluster-left">
             <Link className={isCurrent("/") ? "active" : ""} href="/" aria-current={pathname === "/" ? "page" : undefined}>Home</Link>
@@ -111,15 +114,23 @@ export function SiteHeader() {
               </div>
             </div>
             <Link href="/#sequence">How it works</Link>
+            <Link className={pathname === "/use-cases" ? "active" : ""} href="/use-cases" aria-current={pathname === "/use-cases" ? "page" : undefined}>Use cases</Link>
           </div>
 
           <div className="nav-cluster nav-cluster-right">
-            <Link className={pathname === "/use-cases" ? "active" : ""} href="/use-cases" aria-current={pathname === "/use-cases" ? "page" : undefined}>Use cases</Link>
-            <div className={`nav-group${["/about", "/contact"].includes(pathname) ? " active" : ""}`}>
+            <div className={`nav-group${companyLinks.some((item) => item.href === pathname) ? " active" : ""}`}>
               <Link href="/about">Company <span aria-hidden="true">⌄</span></Link>
               <div className="nav-dropdown company-dropdown">
                 <div className="dropdown-links">
                   {companyLinks.map((item) => <Link href={item.href} key={item.href} aria-current={pathname === item.href ? "page" : undefined}><span>{item.number}</span><div><strong>{item.label}</strong><small>{item.detail}</small></div><Arrow /></Link>)}
+                </div>
+              </div>
+            </div>
+            <div className={`nav-group${partnerLinks.some((item) => item.href === pathname) ? " active" : ""}`}>
+              <Link href="/vigil360">Partners <span aria-hidden="true">⌄</span></Link>
+              <div className="nav-dropdown partners-dropdown">
+                <div className="dropdown-links">
+                  {partnerLinks.map((item) => <Link href={item.href} key={item.href} aria-current={pathname === item.href ? "page" : undefined}><span>{item.number}</span><div><strong>{item.label}</strong><small>{item.detail}</small></div><Arrow /></Link>)}
                 </div>
               </div>
             </div>
@@ -198,6 +209,22 @@ export function SiteHeader() {
               <div className="mobile-submenu" inert={!companyOpen ? true : undefined}>
                 <div>
                   {companyLinks.map((item) => (
+                    <Link href={item.href} key={item.href} onClick={closeMobile} aria-current={pathname === item.href ? "page" : undefined}>
+                      <small>{item.number}</small><span><strong>{item.label}</strong><em>{item.detail}</em></span><Arrow />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={`mobile-nav-group${partnersOpen ? " is-open" : ""}`}>
+              <div className="mobile-nav-heading">
+                <Link href="/vigil360" onClick={closeMobile} aria-current={pathname === "/vigil360" ? "page" : undefined}><small>06</small><span>Partners</span></Link>
+                <button type="button" aria-label="Toggle Partners links" aria-expanded={partnersOpen} onClick={() => setPartnersOpen((open) => !open)}><i /></button>
+              </div>
+              <div className="mobile-submenu" inert={!partnersOpen ? true : undefined}>
+                <div>
+                  {partnerLinks.map((item) => (
                     <Link href={item.href} key={item.href} onClick={closeMobile} aria-current={pathname === item.href ? "page" : undefined}>
                       <small>{item.number}</small><span><strong>{item.label}</strong><em>{item.detail}</em></span><Arrow />
                     </Link>

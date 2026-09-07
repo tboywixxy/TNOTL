@@ -17,7 +17,6 @@ export default function UseCasesPage() {
           <h1>Protection shaped<br />around <em>real places.</em></h1>
         </div>
         <p>Every environment is different. The principle stays simple: create awareness, add context and keep the response human.</p>
-        <div className="use-cases-mark" aria-hidden="true"><span>I</span><i /><span>IV</span></div>
       </section>
 
       <section className="use-case-stories">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow } from "./icons";
 import { FooterSignal } from "./footer-signal";
+import { BrandLogo } from "./brand-logo";
 
 export function Footer() {
   return (
@@ -15,7 +16,7 @@ export function Footer() {
       </div>
       <div className="footer-grid">
         <div className="footer-brand-block">
-          <Link className="wordmark footer-wordmark" href="/">TNOTL<span className="wordmark-dot" /></Link>
+          <Link className="wordmark footer-wordmark" href="/"><BrandLogo /><span>TNOTL<span className="wordmark-dot" /></span></Link>
           <p><i />Protection ready.<br />Human control, always.</p>
         </div>
         <div className="footer-nav-group">
@@ -27,6 +28,7 @@ export function Footer() {
         <div className="footer-nav-group">
           <p className="footer-label">Company</p>
           <Link href="/about">About</Link>
+          <Link href="/philanthropy">Philanthropy</Link>
           <Link href="/use-cases">Use Cases</Link>
           <Link href="/contact">Contact</Link>
         </div>
