@@ -10,7 +10,6 @@ const pillars = [
 
 function BrandIdentity() {
   return <div className={styles.identity}>
-    <Image src="/images/TNOTL Logo RM-BG.png" alt="TNOTL" width={1254} height={1254} sizes="64px" className={styles.logo} />
     <span>Holistic security<br /><small>TNOTL / NG</small></span>
   </div>;
 }

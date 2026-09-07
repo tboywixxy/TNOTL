@@ -15,22 +15,18 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
   useEffect(() => {
     const root = section.current!;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compact = window.matchMedia("(max-width: 760px)");
     const animated = Array.from(root.querySelectorAll<HTMLElement | SVGPathElement>("[data-start]"));
     let frame = 0;
-    let mobileVisible = false;
 
     const paint = () => {
       frame = 0;
       const rect = root.getBoundingClientRect();
       const scrollable = Math.max(1, rect.height - window.innerHeight);
-      const desktopProgress = Math.max(0, Math.min(1, -rect.top / scrollable));
-      const progress = reduced.matches ? 1 : compact.matches ? (mobileVisible ? 1 : 0) : desktopProgress;
-      const stage = compact.matches ? (mobileVisible ? 5 : 1) : progress < .15 ? 1 : progress < .35 ? 2 : progress < .55 ? 3 : progress < .76 ? 4 : 5;
+      const progress = reduced.matches ? 1 : Math.max(0, Math.min(1, -rect.top / scrollable));
+      const stage = progress < .15 ? 1 : progress < .35 ? 2 : progress < .55 ? 3 : progress < .76 ? 4 : 5;
 
       root.dataset.animated = reduced.matches ? "false" : "true";
       root.dataset.stage = String(stage);
-      root.dataset.mobileVisible = String(mobileVisible || reduced.matches);
       root.style.setProperty("--progress", String(progress));
 
       for (const element of animated) {
@@ -50,26 +46,15 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
     };
 
     const schedule = () => { if (!frame) frame = requestAnimationFrame(paint); };
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        mobileVisible = true;
-        schedule();
-        observer.disconnect();
-      }
-    }, { threshold: .16 });
-    observer.observe(root);
     paint();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     reduced.addEventListener("change", schedule);
-    compact.addEventListener("change", schedule);
     return () => {
-      observer.disconnect();
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       reduced.removeEventListener("change", schedule);
-      compact.removeEventListener("change", schedule);
     };
   }, []);
 
