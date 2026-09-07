@@ -76,7 +76,8 @@
   .system li { gap: 6px; font-size: .5rem; letter-spacing: .02em; }
   .system li > span { font-size: .45rem; }
   .visual { position: absolute; inset: 0; z-index: -1; margin: 0; aspect-ratio: auto; }
-  .visual img { object-position: 61% center; }
+  .visual { background: radial-gradient(circle at 58% 48%,#24313a,#07111c 72%); }
+  .visual img { object-fit: contain; object-position: center 52%; }
   .visual::after { background: linear-gradient(90deg,rgba(4,8,12,.91),rgba(4,8,12,.56) 64%,rgba(4,8,12,.18)),linear-gradient(0deg,#07111c 0,rgba(4,8,12,.78) 22%,transparent 66%),linear-gradient(180deg,rgba(4,8,12,.58),transparent 28%); }
   .pillars { grid-row: 4; grid-template-columns: minmax(0,1fr); gap: 0; }
   .railLabel { display: none; }
