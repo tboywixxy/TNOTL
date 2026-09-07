@@ -50,19 +50,19 @@
 }
 
 @media (max-width: 760px) {
-  .section { height: 370vh; }
-  .canvas { min-height: 0; padding: 72px 20px 16px; }
+  .section { height: auto; }
+  .canvas { position: relative; height: auto; min-height: 0; padding: 72px 20px 26px; }
   .systemRail { display: none; }
-  .diagram { height: calc(100svh - 88px); min-height: 0; }
-  .diagram::before { top: 48%; width: min(82vw,360px); opacity: .06; filter: drop-shadow(0 0 18px rgba(201,163,93,.16)); }
+  .diagram { height: clamp(560px,155vw,700px); min-height: 0; }
+  .diagram::before { top: 46%; width: min(62vw,250px); opacity: .055; filter: drop-shadow(0 0 16px rgba(201,163,93,.14)); }
   .caption { top: 1%; right: 0; left: auto; text-align: right; }
   .identity { top: 1%; left: 0; width: 74%; text-align: left; transform: translateY(calc((1 - var(--reveal)) * 11px)); }
   .identity h2 { padding-left: 0; font-size: clamp(36px,11vw,52px); }
   .identity p { margin-top: 4px; font-size: 8px; }
   .identity small { justify-content: flex-start; gap: 6px; margin-top: 5px; font-size: 6px; letter-spacing: .04em; }
   .connectors { display: none; }
-  .branches { top: 21%; bottom: 22%; display: block; margin-left: 6px; }
-  .branches::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 1px; background: #65717b; transform: scaleY(min(1,calc(var(--progress) * 1.65))); transform-origin: top; }
+  .branches { top: 19%; bottom: 21%; display: block; margin-left: 6px; }
+  .branches::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 1px; background: #65717b; transform: scaleY(var(--progress)); transform-origin: top; transition: transform 1.1s cubic-bezier(.22,.72,.1,1); }
   .branch { height: 33.333%; padding-left: 25px; text-align: left; }
   .branch::before { content: ""; position: absolute; top: 15%; left: 0; width: 16px; height: 1px; background: var(--gold); }
   .category,.name,.outcomes { position: static; width: auto; }
@@ -73,12 +73,19 @@
   .impact { top: auto; bottom: 3%; width: 100%; text-align: left; }
   .impact h3 { font-size: clamp(18px,5.4vw,26px); }
   .impact p { font-size: 7px; }
+  .category { transition-delay: .08s; }
+  .name { transition-delay: .2s; }
+  .outcome { transition-delay: .34s; }
+  .outcome + .outcome { transition-delay: .46s; }
+  .impact { transition-delay: .64s; }
+  .scrollCue { display: none; }
 }
 
 @media (max-height: 690px) and (max-width: 760px) {
   .canvas { padding-top: 64px; }
   .identity h2 { font-size: 34px; }
   .identity small { display: none; }
+  .diagram { height: 540px; }
   .branches { top: 17%; bottom: 21%; }
   .name { margin-top: 4px; font-size: 14px; }
   .outcomes { margin-top: 3px; font-size: 7px; }
