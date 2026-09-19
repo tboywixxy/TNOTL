@@ -107,8 +107,8 @@ export const useCases = [
     label: "Domestic protection",
     text: "Know when a protected entrance is disturbed, see what is happening and choose the response while the people you love are inside.",
     className: "case-home",
-    image: "/images/illustrations/use-case-home-sketch.png",
-    imageAlt: "White charcoal illustration of a Black family sharing a relaxed moment in their living room",
+    image: "/images/illustrations/use-case-2.png",
+    imageAlt: "Black family sharing a relaxed moment together in their living room",
   },
   {
     number: "II",
@@ -116,8 +116,8 @@ export const useCases = [
     label: "Sensitive spaces",
     text: "Give responsible staff immediate awareness and visual context across occupied buildings where calm decisions matter.",
     className: "case-school",
-    image: "/images/illustrations/use-case-school-sketch.png",
-    imageAlt: "White charcoal illustration of students and a teacher moving through a school corridor",
+    image: "/images/illustrations/use-case-4.png",
+    imageAlt: "Students and a teacher moving through a school corridor",
   },
   {
     number: "III",
@@ -125,8 +125,8 @@ export const useCases = [
     label: "Offices & property",
     text: "Protect people, workspaces and access points with information that reaches beyond a passive alarm notification.",
     className: "case-office",
-    image: "/images/illustrations/use-case-commercial-sketch.png",
-    imageAlt: "White charcoal illustration of a suited Black professional reviewing a tablet in a modern office",
+    image: "/images/illustrations/use-case-1.png",
+    imageAlt: "Suited Black professional reviewing a tablet in a modern office",
   },
   {
     number: "IV",
@@ -134,7 +134,7 @@ export const useCases = [
     label: "Flexible deployment",
     text: "Coordinate awareness across controlled entrances and operational spaces while keeping every response under human authority.",
     className: "case-facility",
-    image: "/images/illustrations/use-case-facility-sketch.png",
-    imageAlt: "White charcoal illustration of two facilities managers walking through a controlled operations building",
+    image: "/images/illustrations/use-case-3.png",
+    imageAlt: "Two facilities managers walking through a controlled operations building",
   },
 ] as const;

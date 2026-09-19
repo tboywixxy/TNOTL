@@ -8,7 +8,7 @@ import styles from "./ecosystem-architecture.module.css";
 const space = localFont({ src: "../../public/fonts/SpaceMono-Regular.ttf", display: "swap", variable: "--architecture-font" });
 type Pillar = { number: string; category: string; name: string; lines: readonly string[]; href: string };
 
-// Every level remains in the DOM. Scroll progress only constructs and re-emphasises the tree.
+// Every level remains in the DOM. Entering the viewport constructs the tree once.
 export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] }) {
   const section = useRef<HTMLElement>(null);
 
@@ -17,25 +17,21 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const animated = Array.from(root.querySelectorAll<HTMLElement | SVGPathElement>("[data-start]"));
     let frame = 0;
+    let started = false;
 
-    const paint = () => {
-      frame = 0;
-      const rect = root.getBoundingClientRect();
-      const scrollable = Math.max(1, rect.height - window.innerHeight);
-      const progress = reduced.matches ? 1 : Math.max(0, Math.min(1, -rect.top / scrollable));
+    const paint = (progress: number) => {
       const stage = progress < .15 ? 1 : progress < .35 ? 2 : progress < .55 ? 3 : progress < .76 ? 4 : 5;
 
-      root.dataset.animated = reduced.matches ? "false" : "true";
       root.dataset.stage = String(stage);
       root.style.setProperty("--progress", String(progress));
 
       for (const element of animated) {
         const start = Number(element.dataset.start);
         const end = Number(element.dataset.end ?? start + .06);
-        const amount = reduced.matches ? 1 : Math.max(0, Math.min(1, (progress - start) / (end - start)));
+        const amount = Math.max(0, Math.min(1, (progress - start) / (end - start)));
         const reveal = amount * amount * (3 - 2 * amount);
         element.style.setProperty("--reveal", String(reveal));
-        element.style.setProperty("--emphasis", progress > end + .08 ? ".56" : "1");
+        element.style.setProperty("--emphasis", "1");
 
         if (element instanceof SVGPathElement) element.style.strokeDashoffset = String(1 - reveal);
         if (element instanceof HTMLAnchorElement) {
@@ -45,16 +41,59 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
       }
     };
 
-    const schedule = () => { if (!frame) frame = requestAnimationFrame(paint); };
-    paint();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    reduced.addEventListener("change", schedule);
+    const finish = () => {
+      root.dataset.animated = "false";
+      paint(1);
+    };
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      if (reduced.matches) {
+        finish();
+        return;
+      }
+
+      root.dataset.animated = "true";
+      const beganAt = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - beganAt) / 3000);
+        paint(progress);
+        if (progress < 1) frame = requestAnimationFrame(tick);
+        else root.dataset.animated = "false";
+      };
+      frame = requestAnimationFrame(tick);
+    };
+
+    root.dataset.animated = reduced.matches ? "false" : "true";
+    delete root.dataset.stage;
+    if (reduced.matches) finish();
+    else {
+      for (const element of animated) {
+        element.style.setProperty("--reveal", "0");
+        element.style.setProperty("--emphasis", "1");
+        if (element instanceof SVGPathElement) element.style.strokeDashoffset = "1";
+        if (element instanceof HTMLAnchorElement) {
+          element.tabIndex = -1;
+          element.style.pointerEvents = "none";
+        }
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        start();
+        observer.disconnect();
+      }
+    }, { threshold: .2 });
+
+    if (!started) observer.observe(root);
+    const onMotionChange = () => { if (reduced.matches) finish(); };
+    reduced.addEventListener("change", onMotionChange);
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      reduced.removeEventListener("change", schedule);
+      observer.disconnect();
+      reduced.removeEventListener("change", onMotionChange);
     };
   }, []);
 
@@ -63,7 +102,7 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
   );
 
   return (
-    <section ref={section} id="ecosystem" className={`${styles.section} ${space.variable}`} data-animated="true" data-stage="1" aria-labelledby="ecosystem-title">
+    <section ref={section} id="ecosystem" className={`${styles.section} ${space.variable}`} data-animated="true" aria-labelledby="ecosystem-title">
       <div className={styles.canvas}>
         <div className={styles.systemRail} aria-hidden="true"><span>SYSTEM / 001</span></div>
         <div className={styles.diagram}>
@@ -109,7 +148,6 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
             <p>PEOPLE / TECHNOLOGY / IMPACT</p>
           </div>
         </div>
-        <div className={styles.scrollCue} aria-hidden="true"><span>SCROLL</span><i /></div>
       </div>
     </section>
   );

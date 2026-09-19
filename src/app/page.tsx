@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "@/components/icons";
-import { Eyebrow, TextLink } from "@/components/site-shell";
+import { Eyebrow } from "@/components/site-shell";
 import { EcosystemHero } from "@/components/ecosystem-hero";
 import { HomeEcosystemShowcase, HomeTgkShowcase } from "@/components/home-ecosystem-showcase";
-import { romanNumerals, sequence, useCases } from "@/data/site";
+import { romanNumerals, sequence } from "@/data/site";
 
 export default function Home() {
   return (
@@ -56,29 +55,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="human-control">
-        <div className="human-sketch">
-          <Image src="/images/illustrations/human-remote-control-black.png" alt="Illustration of a Black person deliberately activating a security remote" width={1132} height={1390} sizes="(max-width: 760px) 80vw, 38vw" />
-        </div>
-        <div className="human-copy">
-          <Eyebrow index="V /">Human control</Eyebrow>
-          <h2>Technology detects.<br /><em>Humans decide.</em></h2>
-          <p>TNOTL keeps the final response under human control. The alarm creates awareness, the camera adds context, and only a person can authorize deployment.</p>
-          <ol className="decision-chain" aria-label="Human-controlled response chain">
-            <li><small>I</small><span>Detection</span></li>
-            <li><small>II</small><span>Information</span></li>
-            <li className="human-decision"><small>III</small><strong>Human decision</strong></li>
-            <li><small>IV</small><span>Response</span></li>
-          </ol>
-        </div>
-      </section>
-
       <HomeTgkShowcase />
-
-      <section className="cases-preview">
-        <div className="cases-heading"><Eyebrow index="VI /">Where protection matters</Eyebrow><h2>Designed around<br /><em>occupied space.</em></h2><TextLink href="/use-cases">Explore use cases</TextLink></div>
-        <div className="cases-list">{useCases.slice(0, 3).map((item) => <Link href="/use-cases" className={`case-row ${item.className}`} key={item.number}><span>{item.number}</span><h3>{item.title}</h3><p>{item.label}</p><Arrow /></Link>)}</div>
-      </section>
 
       <HomeEcosystemShowcase />
 

@@ -15,8 +15,7 @@ const systemLinks = [
 
 const companyLinks = [
   { label: "About TNOTL", detail: "Purpose and principles", href: "/about", number: "I" },
-  { label: "Use Cases", detail: "Homes, schools and property", href: "/use-cases", number: "II" },
-  { label: "Contact", detail: "Plan your protection", href: "/contact", number: "III" },
+  { label: "Contact", detail: "Plan your protection", href: "/contact", number: "II" },
 ] as const;
 
 const partnerLinks = [
@@ -35,7 +34,7 @@ export function SiteHeader() {
   const [systemOpen, setSystemOpen] = useState(() => pathname.startsWith("/system"));
   const [companyOpen, setCompanyOpen] = useState(() => companyLinks.some((item) => item.href === pathname));
   const [partnersOpen, setPartnersOpen] = useState(() => partnerLinks.some((item) => item.href === pathname));
-  const lightHero = ["/about", "/use-cases", "/contact"].includes(pathname);
+  const lightHero = ["/", "/about", "/use-cases", "/contact", "/system"].includes(pathname);
   const menuButton = useRef<HTMLButtonElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const mobileDrawer = useRef<HTMLElement>(null);
@@ -98,7 +97,7 @@ export function SiteHeader() {
   const isCurrent = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className={`header-system${lightHero ? " has-light-hero" : ""}${condensed ? " is-condensed" : ""}`}>
+    <header className={`header-system${pathname === "/" ? " is-home" : ""}${lightHero ? " has-light-hero" : ""}${condensed ? " is-condensed" : ""}`}>
       <div className="nav-panel">
         <Link className="nav-home" href="/" aria-label="TNOTL home"><Mark ghost /></Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -107,13 +106,11 @@ export function SiteHeader() {
             <div className={`nav-group${pathname.startsWith("/system") ? " active" : ""}`}>
               <Link href="/system">System <span aria-hidden="true">⌄</span></Link>
               <div className="nav-dropdown system-dropdown">
-                <div className="dropdown-intro"><small>PRODUCT SYSTEM</small><p>Three coordinated layers. One human decision.</p></div>
                 <div className="dropdown-links">
                   {systemLinks.map((item) => <Link href={item.href} key={item.href} aria-current={pathname === item.href ? "page" : undefined}><span>{item.number}</span><div><strong>{item.label}</strong><small>{item.detail}</small></div><Arrow /></Link>)}
                 </div>
               </div>
             </div>
-            <Link href="/#sequence">How it works</Link>
             <Link className={pathname === "/use-cases" ? "active" : ""} href="/use-cases" aria-current={pathname === "/use-cases" ? "page" : undefined}>Use cases</Link>
           </div>
 
@@ -194,16 +191,13 @@ export function SiteHeader() {
               </div>
             </div>
 
-            <Link className="mobile-primary-link" href="/#sequence" onClick={closeMobile}>
-              <small>03</small><span>How it works</span><Arrow />
-            </Link>
             <Link className="mobile-primary-link" href="/use-cases" onClick={closeMobile} aria-current={pathname === "/use-cases" ? "page" : undefined}>
-              <small>04</small><span>Use cases</span><Arrow />
+              <small>03</small><span>Use cases</span><Arrow />
             </Link>
 
             <div className={`mobile-nav-group${companyOpen ? " is-open" : ""}`}>
               <div className="mobile-nav-heading">
-                <Link href="/about" onClick={closeMobile} aria-current={pathname === "/about" ? "page" : undefined}><small>05</small><span>Company</span></Link>
+                <Link href="/about" onClick={closeMobile} aria-current={pathname === "/about" ? "page" : undefined}><small>04</small><span>Company</span></Link>
                 <button type="button" aria-label="Toggle Company links" aria-expanded={companyOpen} onClick={() => setCompanyOpen((open) => !open)}><i /></button>
               </div>
               <div className="mobile-submenu" inert={!companyOpen ? true : undefined}>
@@ -219,7 +213,7 @@ export function SiteHeader() {
 
             <div className={`mobile-nav-group${partnersOpen ? " is-open" : ""}`}>
               <div className="mobile-nav-heading">
-                <Link href="/vigil360" onClick={closeMobile} aria-current={pathname === "/vigil360" ? "page" : undefined}><small>06</small><span>Partners</span></Link>
+                <Link href="/vigil360" onClick={closeMobile} aria-current={pathname === "/vigil360" ? "page" : undefined}><small>05</small><span>Partners</span></Link>
                 <button type="button" aria-label="Toggle Partners links" aria-expanded={partnersOpen} onClick={() => setPartnersOpen((open) => !open)}><i /></button>
               </div>
               <div className="mobile-submenu" inert={!partnersOpen ? true : undefined}>
