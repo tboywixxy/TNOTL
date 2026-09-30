@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Arrow } from "@/components/icons";
 import { Eyebrow } from "@/components/site-shell";
 import { EcosystemHero } from "@/components/ecosystem-hero";
-import { HomeEcosystemShowcase, HomeTgkShowcase } from "@/components/home-ecosystem-showcase";
+import { HomeEcosystemShowcase, HomeTgkShowcase, HomeVigilShowcase } from "@/components/home-ecosystem-showcase";
 import { romanNumerals, sequence } from "@/data/site";
 
 export default function Home() {
@@ -26,8 +26,8 @@ export default function Home() {
           <div className="manifesto-copy">
             <p>Conventional systems tell you something happened. TNOTL gives you the information and control to decide what happens next.</p>
             <ol className="manifesto-steps" aria-label="TNOTL response path">
-              {['Detect', 'See', 'Assess', 'Respond'].map((step, index) => (
-                <li key={step}><small>{romanNumerals[index]}</small><strong>{step}</strong><i /></li>
+              {sequence.map(([number, step, text]) => (
+                <li key={number}><small>{number}</small><strong>{step}</strong><p>{text}</p><i /></li>
               ))}
             </ol>
           </div>
@@ -56,6 +56,8 @@ export default function Home() {
       </section>
 
       <HomeTgkShowcase />
+
+      <HomeVigilShowcase />
 
       <HomeEcosystemShowcase />
 

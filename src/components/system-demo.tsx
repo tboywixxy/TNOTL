@@ -21,7 +21,7 @@ const copy: Record<DemoStage, { code: string; title: string; detail: string; sce
   verify: {
     code: "II — SEE",
     title: "You check the live camera.",
-    detail: "Now make the human decision: is this harmless, or is there a genuine threat?",
+    detail: "A person assesses the scene and confirms the threat. Now make the human decision: is this harmless, or is there a genuine threat?",
     scene: "Live camera view opened",
   },
   ready: {

@@ -63,7 +63,7 @@ export const products: Product[] = [
       "Remote situational awareness",
     ],
     role:
-      "The Indoor Camera turns an alert into visible context. It does not make the decision for you; it gives you the live information needed to make that decision responsibly.",
+      "The Indoor Camera turns an alert into visible context. A person assesses the scene and confirms the threat. It does not make the decision for you; it gives you the live information needed to make that decision responsibly.",
   },
   {
     slug: "visibility-reducer",

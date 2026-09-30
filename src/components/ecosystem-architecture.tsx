@@ -106,21 +106,21 @@ export function EcosystemArchitecture({ pillars }: { pillars: readonly Pillar[] 
       <div className={styles.canvas}>
         <div className={styles.systemRail} aria-hidden="true"><span>SYSTEM / 001</span></div>
         <div className={styles.diagram}>
-          <div className={`${styles.caption} ${styles.layer}`} data-start=".02" data-end=".09">ONE VISION.<br />THREE DIMENSIONS.</div>
           <header className={`${styles.identity} ${styles.layer}`} data-start="0" data-end=".11">
             <h2 id="ecosystem-title">TNOTL</h2>
             <p>HOLISTIC SECURITY</p>
-            <small>PROTECTION <i /> AWARENESS <i /> ASSURANCE</small>
+            <small><span>PROTECTION</span><i aria-hidden="true" /><span>AWARENESS</span><i aria-hidden="true" /><span>ASSURANCE</span></small>
           </header>
+          <div className={`${styles.caption} ${styles.layer}`} data-start=".02" data-end=".09">ONE VISION.<br />THREE DIMENSIONS.</div>
 
           <svg className={styles.connectors} viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-            {path("M500 132 V178", .15, .20, undefined, styles.rootPath)}
-            {path("M500 178 H168 M500 178 H832", .20, .26, undefined, styles.rootPath)}
+            {path("M500 198 V230", .15, .20, undefined, styles.rootPath)}
+            {path("M500 230 H168 M500 230 H832", .20, .26, undefined, styles.rootPath)}
             {[168, 500, 832].map((x, index) => (
               <g key={x} data-branch={index}>
-                {path(`M${x} 178 V224`, .26, .30, index)}
-                {path(`M${x} 270 V332`, .36, .42, index)}
-                {path(`M${x} 382 V430`, .56, .62, index)}
+                {path(`M${x} 230 V245`, .26, .30, index)}
+                {path(`M${x} 294 V324`, .36, .42, index)}
+                {path(`M${x} 410 V438`, .56, .62, index)}
                 {path(`M${x} 522 V558 Q${x} 580 ${x < 500 ? 196 : x > 500 ? 804 : 500} 580 H500`, .76 + index * .02, .87 + index * .02, index)}
               </g>
             ))}

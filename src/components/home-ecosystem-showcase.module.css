@@ -1,0 +1,116 @@
+.section {
+  padding: 36px clamp(20px, 6vw, 100px) 40px;
+  color: #17344d;
+  border-top: 1px solid rgba(23, 52, 77, .14);
+}
+
+.keeper { background: #f5faff; }
+.vigil { background: #e5f1f9; }
+.inner { max-width: 1280px; margin-inline: auto; }
+
+.topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(23, 52, 77, .16);
+  font-family: var(--mono);
+  font-size: .65rem;
+  line-height: 1.6;
+}
+
+.topline p { margin: 0; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.topline > span { color: #49677e; text-align: right; }
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 88px);
+  padding-block: 56px;
+}
+
+.copy { min-width: 0; }
+.eyebrow { margin: 0 0 22px; color: #376b91; font-family: var(--mono); font-size: .65rem; line-height: 1.7; letter-spacing: .1em; text-transform: uppercase; }
+.copy h2, .copy h3 { margin: 0; font-family: var(--display); font-size: clamp(3.2rem, 5.8vw, 6rem); font-weight: 400; line-height: 1.02; letter-spacing: -.045em; }
+.copy h2 em, .copy h3 em { color: #367bab; font-weight: 400; }
+.description { max-width: 430px; margin: 26px 0 0; color: #49677e; font-size: 1rem; line-height: 1.85; }
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  max-width: 100%;
+  min-height: 48px;
+  margin-top: 26px;
+  padding-block: 12px;
+  border-bottom: 1px solid #2d78b7;
+  color: #24689c;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: color .2s, border-color .2s;
+}
+
+.link:hover { color: #17344d; border-color: #17344d; }
+.link:focus-visible { outline: 2px solid #2d78b7; outline-offset: 6px; }
+.link svg { width: 18px; height: 18px; }
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 390px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid rgba(23, 52, 77, .12);
+  border-radius: 4px;
+}
+
+.keeperBrand { background: radial-gradient(ellipse at 50% 40%, #fff 8%, #e6f1fa 72%); }
+.vigilBrand { color: #f5faff; background: radial-gradient(ellipse at 50% 35%, #16374e, #0c1b29 75%); border-color: #16374e; }
+.logoStage { position: relative; isolation: isolate; display: grid; place-items: center; flex: 1; min-height: 260px; }
+.logoStage::before { content: ""; position: absolute; z-index: -1; width: 230px; max-width: 88%; aspect-ratio: 1; border: 1px solid rgba(55, 107, 145, .12); border-radius: 50%; box-shadow: 0 0 0 28px rgba(55, 107, 145, .035); }
+.vigilBrand .logoStage::before { width: 270px; border-color: rgba(145, 205, 239, .13); box-shadow: 0 0 0 25px rgba(145, 205, 239, .025); }
+.keeperLogo { display: block; width: min(100%, 420px); height: auto; object-fit: contain; }
+.vigilLogo { display: block; width: 230px; max-width: 80%; height: auto; object-fit: contain; }
+.brand figcaption { position: relative; margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(23, 52, 77, .13); text-align: center; font-family: var(--display); font-size: 1.65rem; line-height: 1.2; }
+.brand figcaption span { display: block; margin-top: 9px; color: #49677e; font-family: var(--mono); font-size: .6rem; line-height: 1.7; letter-spacing: .025em; }
+.vigilBrand figcaption { border-color: rgba(145, 205, 239, .16); }
+.vigilBrand figcaption span { color: #a2bfd2; }
+
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(23, 52, 77, .16); }
+.pillars li { display: flex; align-items: baseline; gap: 16px; padding: 24px 20px 0; font-size: .9rem; }
+.pillars li:first-child { padding-left: 0; }
+.pillars li + li { border-left: 1px solid rgba(23, 52, 77, .12); }
+.pillars li span { color: #376b91; font-family: var(--mono); font-size: .6rem; }
+
+@media (max-width: 1000px) {
+  .feature { gap: 32px; }
+  .brand { min-height: 360px; padding: 22px; }
+  .pillars li { gap: 10px; padding-inline: 14px; font-size: .8rem; }
+}
+
+@media (max-width: 760px) {
+  .section { padding-block: 26px 28px; }
+  .topline { font-size: .58rem; padding-bottom: 18px; }
+  .topline > span { max-width: 180px; }
+  .feature { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 34px; }
+  .copy h2, .copy h3 { font-size: clamp(2.9rem, 10vw, 4.5rem); }
+  .eyebrow { margin-bottom: 16px; font-size: .6rem; }
+  .description { margin-top: 20px; }
+  .link { margin-top: 18px; }
+  .brand { min-height: 320px; }
+  .logoStage { min-height: 215px; }
+  .logoStage::before { width: 180px; }
+  .vigilBrand .logoStage::before { width: 220px; }
+  .keeperLogo { width: min(100%, 360px); }
+  .vigilLogo { width: 190px; }
+  .brand figcaption { margin-top: 18px; padding-top: 18px; font-size: 1.5rem; }
+  .pillars li { display: block; padding: 16px 10px 0; font-size: .75rem; }
+  .pillars li span { display: block; margin-bottom: 8px; }
+}

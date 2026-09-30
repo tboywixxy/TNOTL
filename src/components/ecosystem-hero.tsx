@@ -6,14 +6,14 @@ import { EcosystemArchitecture } from "./ecosystem-architecture";
 import styles from "./tnotl-hero.module.css";
 
 const pillars = [
-  { number: "01", category: "Software", name: "Vigil 360", lines: ["Real-time awareness", "Greater response"], href: "/vigil360" },
-  { number: "02", category: "Hardware", name: "Visibility Reducer", lines: ["Control your environment", "Disorient threats"], href: "/system/visibility-reducer" },
-  { number: "03", category: "Philanthropy", name: "The Guardians’ Keeper", lines: ["Safer communities", "Brighter futures"], href: "/philanthropy" },
+  { number: "01", category: "Software", name: "Vigil\n360", lines: ["Real-time awareness", "Greater response"], href: "/vigil360" },
+  { number: "02", category: "Hardware", name: "Visibility\nReducer", lines: ["Control your environment", "Disorient threats"], href: "/system/visibility-reducer" },
+  { number: "03", category: "Philanthropy", name: "The Guardians’\nKeeper", lines: ["Safer communities", "Brighter futures"], href: "/philanthropy" },
 ] as const;
 
 const slides = [
   {
-    image: "/images/tnotl-home-protection-hero.png",
+    image: "/images/home_hero.png",
     alt: "A family with Nigerian police and military personnel outside a home at sunset",
     label: "Holistic security",
     meta: "TNOTL / NG",
